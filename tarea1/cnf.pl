@@ -3,19 +3,25 @@
 :- op(2, xfy, and).
 :- op(1, fy,  neg).
 
-fimp(X,FBF) :- X = A imp B,
-    fimp(A, C), fimp(B, D),
-    FBF = (neg (C) or D), !.
-
-fimp(X,FBF) :- X = A or B,
-    fimp(A, C), fimp(B, D),
+free_impl(X,FBF) :- X = A or B,
+    free_impl(A, C), free_impl(B, D),
     FBF = (C or D), !.
 
-fimp(X,FBF) :- X = A and B,
-    fimp(A, C), fimp(B, D),
+free_impl(X,FBF) :- X = A and B,
+    free_impl(A, C), free_impl(B, D),
     FBF = (C and D), !.
 
-fimp(X,FBF):- FBF = X.
+free_impl(X,FBF) :- X = A imp B,
+    free_impl(A, C), free_impl(B, D),
+    FBF = (neg (C) or D), !.
+
+free_impl(X,FBF):- FBF = X.
+
+nnf(neg (A and B),NNF):- nnf(neg A, C),
+    nnf(neg B, D), NNF = (C or D), !.
+
+nnf(neg (A or B),NNF):- nnf(neg A, C),
+    nnf(neg B, D), NNF = (C and D), !.
 
 nnf(X,NNF):- X = A and B,
     nnf(A, C), nnf(B, D),
@@ -25,26 +31,20 @@ nnf(X,NNF):- X = A or B,
     nnf(A, C), nnf(B, D),
     NNF = (C or D), !.
 
-nnf(neg (A and B),NNF):- nnf(neg A, C),
-    nnf(neg B, D), NNF = (C or D), !.
-
-nnf(neg (A or B),NNF):- nnf(neg A, C),
-    nnf(neg B, D), NNF = (C and D), !.
-
 nnf(neg (neg X),NNF):- NNF = X,!.
 
 nnf(X,NNF):- NNF = X.
 
-distr(X,Y,DISTR):- X=P and Q,
-    distr(P,Y,DISTR2), distr(Q,Y, DISTR3),
-    DISTR = DISTR2 and DISTR3, !.
+distrib(X,Y,DISTRIB):- X=P and Q,
+    distrib(P,Y,DISTRIB2), distrib(Q,Y, DISTRIB3),
+    DISTRIB = DISTRIB2 and DISTRIB3, !.
 
-distr(X,Y,DISTR):- Y=P and Q,
-    distr(X,P,DISTR2),
-    distr(X,Q,DISTR3),
-    DISTR = DISTR2 and DISTR3, !.
+distrib(X,Y,DISTRIB):- Y=P and Q,
+    distrib(X,P,DISTRIB2),
+    distrib(X,Q,DISTRIB3),
+    DISTRIB = DISTRIB2 and DISTRIB3, !.
 
-distr(X,Y,DISTR):- DISTR = X or Y.
+distrib(X,Y,DISTRIB):- DISTRIB = X or Y.
 
 cnf_aux(Z,CNF):- Z = X and Y,
     cnf_aux(X,P), cnf_aux(Y,Q),
@@ -52,9 +52,9 @@ cnf_aux(Z,CNF):- Z = X and Y,
 
 cnf_aux(Z,CNF):- Z= X or Y,
     cnf_aux(X,P), cnf_aux(Y,Q),
-    distr(P,Q,CNFAUX), CNF=CNFAUX, !.
+    distrib(P,Q,CNFAUX), CNF=CNFAUX, !.
 
 cnf_aux(Z,CNF):- Z=CNF.
 
-cnf(Z, CNF):- fimp(Z,Q),
+cnf(Z, CNF):- free_impl(Z,Q),
     nnf(Q, R), cnf_aux(R, CNF), !.
