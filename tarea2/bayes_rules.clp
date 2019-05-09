@@ -1,6 +1,7 @@
 ;; (load /home/arturo/GitHub/rc-mia/tarea2/bayes_rules.clp)
 
-(defrule get_prob
-  (p ?event ?prob)
+(defrule implication
+  (p ?offspring ?parents 1)
+  (t ?parents)
 =>
-	(printout t ?prob crlf))
+  (printout t ?offspring " con probabilidad 1"))
