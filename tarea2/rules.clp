@@ -1,18 +1,20 @@
+;; (load /home/arturo/GitHub/rc-mia/tarea2/rules.clp)
+
 (defrule regla008
 	(organismo identidad estafilococo)
-  	(organismo sensible penicilina)
-  	(paciente alergico-penicilina -)
+  (organismo sensible penicilina)
+  (paciente alergico-penicilina -)
 =>
-	(assert (paciente rx08 penicilina-g 5))
-  	(printout t "paciente rx08 penicilina-g 5" crlf))
+  (assert (paciente rx08 penicilina-g 5))
+  (printout t "paciente rx08 penicilina-g 5" crlf))
 
 (defrule regla009
 	(organismo identidad estafilococo)
-   	(organismo sensible penicilina)
-   	(paciente alergico-penicilina +)
- =>
+  (organismo sensible penicilina)
+  (paciente alergico-penicilina +)
+=>
 	(assert (paciente rx09 eritromicina))
-   	(printout t "paciente alergico-penicilina +" crlf))
+  (printout t "paciente alergico-penicilina +" crlf))
 
 (defrule regla010
 	(organismo identidad estafilococo)
