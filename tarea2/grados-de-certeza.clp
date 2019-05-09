@@ -1,4 +1,4 @@
-;; (load /home/arturo/GitHub/rc-mia/tarea2/rules.clp)
+;; (load /home/arturo/GitHub/rc-mia/tarea2/grados-de-certeza.clp)
 
 (deftemplate organismo
 
