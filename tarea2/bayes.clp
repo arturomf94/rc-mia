@@ -120,4 +120,11 @@
 
 ; implicaciones:
 
-(assert (p organismo-identidad-salmonela paciente-rx15-cloromicetina-5-ampicilina-5 1))
+(assert (p paciente-rx15-cloromicetina-5-ampicilina-5 organismo-identidad-salmonela 1))
+(assert (p paciente-rx10-cefalotina-cefaloridina-5-cloxacilina-dicloxacilina-meticilina-naficilina-oxacilina-5-eritromicina organismo-identidad-estafilococo organismo-resistente-penicilina 1))
+
+; evidencia de prueba:
+
+(assert (evidencia organismo-resistente-penicilina))
+(assert (evidencia organismo-identidad-estafilococo))
+(assert (evidencia organismo-gramm--))
