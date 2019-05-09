@@ -1,3 +1,4 @@
+;; (load /home/arturo/GitHub/rc-mia/tarea2/rules.clp)
 
 (deftemplate organismo
 
