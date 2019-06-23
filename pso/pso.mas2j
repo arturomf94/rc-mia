@@ -1,0 +1,13 @@
+MAS pso {
+
+	infrastructure: Centralised
+	
+	environment: jaca.CartagoEnvironment
+
+	agents:
+		parameters;
+		admin agentArchClass jaca.CAgentArch;
+
+	aslSourcePath:
+		"src/asl";
+}
