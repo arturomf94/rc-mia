@@ -6,7 +6,7 @@ MAS pso {
 
 	agents:
 		parameters;
-		admin agentArchClass jaca.CAgentArch;
+		central agentArchClass jaca.CAgentArch;
 
 	aslSourcePath:
 		"src/asl";

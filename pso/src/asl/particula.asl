@@ -21,7 +21,7 @@
 	
 @reportarPbest[atomic]
 +!reportarPbest : pbest([I1, I2], A) <-
-	.send(admin, tell, pbest([I1, I2], A)).
+	.send(central, tell, pbest([I1, I2], A)).
 
 @iniciarActualizacion[atomic]	
 +!iniciarActualizacion : pbest([PB1, PB2],P1) & position([I1, I2]) & 
@@ -33,7 +33,7 @@
 	-+position([NP1, NP2]);
 	-+velocidad([NV1, NV2]);
 	if (P2 < P1){
-		+pbest([NP1, NP2],P2);
-		.abolish(pbest([I1, I2],P1));
+		-+pbest([NP1, NP2],P2);
 	};
+	.abolish(gbest(_,_));
 	!reportarPbest.
